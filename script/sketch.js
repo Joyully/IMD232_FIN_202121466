@@ -14,7 +14,7 @@ let selectedText = '';
 let initialTextDisplayed = false;
 
 function setup() {
-  setCanvasContainer('canvas', 200, 200, true);
+  setCanvasContainer('canvas', windowWidth * 0.8, windowHeight * 0.8, true);
   background('gainsboro');
 }
 
@@ -30,8 +30,8 @@ function draw() {
   for (let i = 0; i < 10; i++) {
     stroke(getRandomColor());
     for (let n = 0; n < 360; n += 2) {
-      let x = random(50, 150);
-      let xx = random(150, 350);
+      let x = random((width * 0.1) / 1.4, width * 0.4) / 1.4;
+      let xx = random((width * 0.4) / 2, (width * 0.7) / 2);
       push();
       rotate(radians(n));
       strokeCap(SQUARE);
@@ -50,10 +50,10 @@ function draw() {
     text(random(texts), 0, 0);
     selectedText = random(texts);
   } else {
-    strokeWeight(30);
+    strokeWeight(width * 0.03);
     fill('blue');
     stroke(255, 255, 255, 0.5);
-    textSize(20);
+    textSize(width * 0.025);
     if (!initialTextDisplayed) {
       textAlign(CENTER, CENTER);
 
@@ -73,6 +73,10 @@ function mousePressed() {
 
 function mouseReleased() {
   isMouseClicked = false;
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth * 0.8, windowHeight * 0.8);
 }
 
 function getRandomColor() {
