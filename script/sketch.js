@@ -1,6 +1,8 @@
+let tileCount = 30;
+let moduleAlpha = 40;
+let maxDistance = 500;
 let angles = [];
 let isMouseClicked = false;
-
 let texts = [
   'Yes',
   'No',
@@ -8,18 +10,41 @@ let texts = [
   'Most likely',
   'My reply is no',
   'Ask again later',
-  'As i see it yes',
+  'As I see it, yes',
 ];
 let selectedText = '';
 let initialTextDisplayed = false;
+let cx;
+let cy;
 
 function setup() {
-  setCanvasContainer('canvas', windowWidth * 0.8, windowHeight * 0.8, true);
+  cx = 400;
+  cy = 400;
+  setCanvasContainer('canvas', cx, cy, true);
   background('gainsboro');
 }
 
 function draw() {
+  clear();
   background('gainsboro');
+
+  moduleColor = color(0, 0, 0, moduleAlpha);
+
+  stroke(moduleColor);
+
+  for (let gridY = 0; gridY < width * 1.1; gridY += 30) {
+    for (let gridX = 0; gridX < height * 1.1; gridX += 30) {
+      let diameter = dist(mouseX, mouseY, gridX, gridY);
+      diameter = (diameter / maxDistance) * 40;
+      push();
+      noFill();
+      strokeWeight(2);
+      translate(gridX, gridY, diameter * 5);
+      ellipse(0, 0, diameter, diameter);
+      pop();
+    }
+  }
+  stroke(moduleColor);
 
   if (isMouseClicked) {
     translate(mouseX, mouseY);
@@ -47,12 +72,12 @@ function draw() {
     textSize(15);
     textAlign(CENTER, CENTER);
 
-    text(random(texts), 0, 0);
     selectedText = random(texts);
+    text(selectedText, 0, 0);
   } else {
-    strokeWeight(width * 0.03);
+    strokeWeight(width * 0.035);
     fill('blue');
-    stroke(255, 255, 255, 0.5);
+    stroke(255, 255, 255, 150);
     textSize(width * 0.025);
     if (!initialTextDisplayed) {
       textAlign(CENTER, CENTER);
@@ -64,6 +89,12 @@ function draw() {
 
       text(selectedText, 0, 0);
     }
+  }
+}
+
+function keyReleased() {
+  if (key == 's' || key == 'S') {
+    // Your 's' key released code here
   }
 }
 
@@ -82,7 +113,9 @@ function windowResized() {
 function getRandomColor() {
   if (isMouseClicked) {
     colorMode(HSL);
-    return lerpColor(color(30), color(random(255), 50, 50), 1);
+    let hslColor = lerpColor(color(0, 100, 100), color(random(255), 50, 50), 1);
+    colorMode(RGB); // RGB 모드로 되돌림
+    return hslColor;
   } else {
     return color(10);
   }
