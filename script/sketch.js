@@ -18,8 +18,8 @@ let cx;
 let cy;
 
 function setup() {
-  cx = 400;
-  cy = 400;
+  cx = width * 1;
+  cy = height * 1;
   setCanvasContainer('canvas', cx, cy, true);
   background('gainsboro');
 }
@@ -32,10 +32,10 @@ function draw() {
 
   stroke(moduleColor);
 
-  for (let gridY = 0; gridY < width * 1.1; gridY += 30) {
-    for (let gridX = 0; gridX < height * 1.1; gridX += 30) {
+  for (let gridY = 0; gridY < width * 1.1; gridY += width * 0.03) {
+    for (let gridX = 0; gridX < height * 1.1; gridX += width * 0.03) {
       let diameter = dist(mouseX, mouseY, gridX, gridY);
-      diameter = (diameter / maxDistance) * 40;
+      diameter = (diameter / maxDistance) * (width * 0.05);
       push();
       noFill();
       strokeWeight(2);
