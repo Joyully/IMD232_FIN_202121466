@@ -32,6 +32,9 @@ function draw() {
 
   stroke(moduleColor);
 
+  // 원만 있으니 심심해서 마우스에 반응하는 배경 추가
+  // 참고 _ http://www.generative-gestaltung.de/2/sketches/?01_P/P_2_1_2_03
+  // 사각형에서 원으로 변경하고 투명도 줌
   for (let gridY = 0; gridY < width * 1.1; gridY += width * 0.03) {
     for (let gridX = 0; gridX < height * 1.1; gridX += width * 0.03) {
       let diameter = dist(mouseX, mouseY, gridX, gridY);
@@ -46,12 +49,16 @@ function draw() {
   }
   stroke(moduleColor);
 
+  //클릭하면 원이 마우스를 따라오게
   if (isMouseClicked) {
     translate(mouseX, mouseY);
   } else {
     translate(width / 2, height / 2);
   }
 
+  //원 모양 참고
+  //https://youtu.be/UZoVBMgzULk?si=VOEQ2hWawZ67TzHD
+  //thedotisblack creative coding @thedotisblack
   for (let i = 0; i < 10; i++) {
     stroke(getRandomColor());
     for (let n = 0; n < 360; n += 2) {
@@ -66,6 +73,7 @@ function draw() {
     }
   }
 
+  //텍스트
   if (isMouseClicked) {
     strokeWeight(1);
     fill(20);
@@ -110,6 +118,7 @@ function windowResized() {
   resizeCanvas(windowWidth * 0.8, windowHeight * 0.8);
 }
 
+//랜덤 색상
 function getRandomColor() {
   if (isMouseClicked) {
     colorMode(HSL);
